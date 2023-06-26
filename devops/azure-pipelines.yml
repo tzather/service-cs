@@ -1,0 +1,44 @@
+trigger:
+  - main
+
+pool:
+  name: Default
+
+steps:
+  - bash: |
+      dotnet restore 
+      dotnet test Api.UnitTests --logger 'trx;LogFileName=TestResult.trx' --collect 'XPlat Code Coverage'
+    displayName: "dotnet restore"
+
+  - task: PublishTestResults@2
+    displayName: "Publish Test Results"
+    inputs:
+      testResultsFormat: "VSTest"
+      testResultsFiles: "$(Build.SourcesDirectory)/Api.UnitTests/TestResults/TestResult.trx"
+
+  - task: PublishCodeCoverageResults@1
+    displayName: "Publish Code Coverage Results"
+    inputs:
+      codeCoverageTool: "Cobertura"
+      summaryFileLocation: "$(Build.SourcesDirectory)/Api.UnitTests/TestResults/*/coverage.cobertura.xml"
+
+  - task: DotNetCoreCLI@2
+    displayName: "Publish Api Code"
+    inputs:
+      command: publish
+      workingDirectory: Api
+      arguments: "--configuration Release --output $(Build.ArtifactStagingDirectory)"
+      publishWebProjects: False
+      zipAfterPublish: True
+
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact"
+
+  - task: AzureRmWebAppDeployment@4
+    displayName: "Deploy Api"
+    inputs:
+      ConnectionType: "AzureRM"
+      azureSubscription: "My Azure Service connection"
+      appType: "webAppLinux"
+      WebAppName: "tzather-test-identity"
+      packageForLinux: "$(Build.ArtifactStagingDirectory)/a.zip"

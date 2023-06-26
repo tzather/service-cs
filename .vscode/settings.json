@@ -1,0 +1,21 @@
+{
+    "files.exclude": {
+      "**/.git": true,
+      "**/bin": true,
+      "**/obj": true,
+    },
+    "search.exclude": {
+      "**/.git": true,
+      "**/bin": true,
+      "**/obj": true,
+    },
+    "files.watcherExclude": {
+      "**/.git": true,
+      "**/bin": true,
+      "**/obj": true,
+    },
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  }
