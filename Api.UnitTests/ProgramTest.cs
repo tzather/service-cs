@@ -1,7 +1,7 @@
 namespace Zuhid.Identity.Api.UnitTests;
 
 [TestClass]
-public class UnitTest1
+public class ProgramTest
 {
   [TestMethod]
   public void TestMethod1()
