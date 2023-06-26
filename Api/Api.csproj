@@ -4,8 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>Zuhid.Identity.Api</AssemblyName>
-    <RootNamespace>Zuhid.Identity.Api</RootNamespace>
+    <AssemblyName>Tzather.Identity.Api</AssemblyName>
+    <RootNamespace>Tzather.Identity.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

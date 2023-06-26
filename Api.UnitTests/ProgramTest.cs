@@ -1,4 +1,4 @@
-namespace Zuhid.Identity.Api.UnitTests;
+namespace Tzather.Identity.Api.UnitTests;
 
 [TestClass]
 public class ProgramTest

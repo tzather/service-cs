@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <AssemblyName>Zuhid.Identity.Api.UnitTests</AssemblyName>
-    <RootNamespace>Zuhid.Identity.Api.UnitTests</RootNamespace>
+    <AssemblyName>Tzather.Identity.Api.UnitTests</AssemblyName>
+    <RootNamespace>Tzather.Identity.Api.UnitTests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
