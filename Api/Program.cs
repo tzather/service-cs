@@ -19,11 +19,9 @@ app.UseAuthorization();
 app.MapGet("/", (HttpResponse response) =>
 {
   response.ContentType = "text/html";
-  return @"
-<html>
-<body style='padding:100px 0;text-align:center;font-size:xxx-large;'>
-    Api is running<br/><br/>
-    <a href='/swagger'>View Swagger</a>
+  return @"<html><body style='padding:100px 0;text-align:center;font-size:xxx-large;'>
+  Api is running<br/><br/>
+  <a href='/swagger'>View Swagger</a>
 </body></html>";
 });
 app.MapControllers();
