@@ -1,17 +1,14 @@
+using Tzather.Identity.Api.Models;
+using Tzather.Identity.Api.Services;
+
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// builder.Services.AddScoped<ITokenService, JwtTokenService>();
+builder.Services.AddScoped<ITokenService>(option => new JwtTokenService(new IdentityModel())); // Add identity service
 
 var app = builder.Build();
-// Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-// }
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
@@ -23,7 +20,7 @@ app.MapGet("/", (HttpResponse response) =>
   Api is running<br/><br/>
   <a href='/swagger'>View Swagger</a>
 </body></html>";
-});
+}).WithTags("/");
 app.MapControllers();
 
 app.Run();
