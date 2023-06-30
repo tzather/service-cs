@@ -12,7 +12,8 @@ build-server() {
 
 build-database() { (
   cd "$SCRIPT_DIR/$1"
-  dotnet ef database update 0
+  dotnet ef database drop --force
+  # dotnet ef database update 0
   rm -rf Migrations
   dotnet ef migrations add Initial
   dotnet build
@@ -45,6 +46,6 @@ start-api() { (
   dotnet run
 ); }
 
-build-server
+# build-server
 build-database "Api"
-build-database-log
+# build-database-log

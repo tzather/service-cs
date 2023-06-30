@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "UserId": "b55ebae9-e380-4d96-97eb-a3d2a3d6fb9a",
+    "ClaimType": "Title",
+    "ClaimValue": "Vice President"
+  },
+  {
+    "Id": 2,
+    "UserId": "b55ebae9-e380-4d96-97eb-a3d2a3d6fb9a",
+    "ClaimType": "displayGauge",
+    "ClaimValue": "True"
+  },
+  {
+    "Id": 3,
+    "UserId": "b55ebae9-e380-4d96-97eb-a3d2a3d6fb9a",
+    "ClaimType": "displayBarChart",
+    "ClaimValue": "True"
+  }
+]
