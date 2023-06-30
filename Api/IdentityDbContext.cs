@@ -12,7 +12,6 @@ public class IdentityDbContext : IdentityDbContext<UserEntity, RoleEntity, Guid>
   protected override void OnModelCreating(ModelBuilder builder)
   {
     base.OnModelCreating(builder);
-
     // Data Seeding
     builder.LoadData<UserEntity>();
   }

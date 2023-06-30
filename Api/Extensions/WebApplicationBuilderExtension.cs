@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.OpenApi.Models;
@@ -70,9 +71,7 @@ public static class WebApplicationBuilderExtension
       Title = $"{title} Api",
       Version = version
     });
-    var xmlFile = $"Tzather.{title}.xml";
-    // var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
     if (File.Exists(xmlPath))
     {
       options.IncludeXmlComments(xmlPath);

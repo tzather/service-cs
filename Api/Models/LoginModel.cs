@@ -11,6 +11,7 @@ public class LoginModel
   [Required]
   [StringLength(20, MinimumLength = 7)]
   public string Password { get; set; } = "";
+  public string Tfa { get; set; }
 
   public bool RememberMe { get; set; }
 }
