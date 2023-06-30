@@ -1,0 +1,14 @@
+[
+  {
+    "Id": "b55ebae9-e380-4d96-97eb-a3d2a3d6fb9a",
+    "UserName": "admin@company.com",
+    "NormalizedUserName": "ADMIN@COMPANY.COM",
+    "Email": "admin@company.com",
+    "NormalizedEmail": "ADMIN@COMPANY.COM",
+    "PasswordHash": "AJiLztRPZXHOKsAFQUh00aFgb1EmXWJPbUsLtTmlllmlr3i91zJfvg0II+Z2YOt05Q==",
+    "SecurityStamp": "C5LA2V4MWCRPDHRNWO4JQDGJMNQXFIIJ",
+    "ConcurrencyStamp": "468f5793-b5d2-414a-a29e-095833d4f4a6",
+    "PhoneNumber": "1-234-456-7890",
+    "LockoutEnabled": true
+  }
+]

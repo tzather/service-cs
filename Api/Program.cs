@@ -1,26 +1,16 @@
-using Tzather.Identity.Api.Models;
-using Tzather.Identity.Api.Services;
+using Tzather.Identity.Api.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-// builder.Services.AddScoped<ITokenService, JwtTokenService>();
-builder.Services.AddScoped<ITokenService>(option => new JwtTokenService(new IdentityModel())); // Add identity service
+namespace Tzather.Identity.Api;
 
-var app = builder.Build();
-app.UseSwagger();
-app.UseSwaggerUI();
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapGet("/", (HttpResponse response) =>
+public class Program
 {
-  response.ContentType = "text/html";
-  return @"<html><body style='padding:100px 0;text-align:center;font-size:xxx-large;'>
-  Api is running<br/><br/>
-  <a href='/swagger'>View Swagger</a>
-</body></html>";
-}).WithTags("/");
-app.MapControllers();
-
-app.Run();
+  private static void Main(string[] args)
+  {
+    var builder = WebApplication.CreateBuilder(args);
+    var appSetting = new AppSetting(builder.Configuration);
+    builder
+      .AddServices(appSetting.Name, appSetting.Version, appSetting.CorsOrigin, appSetting.Identity)
+      .BuildApp(appSetting.Name, appSetting.Version, appSetting.CorsOrigin)
+      .Run();
+  }
+}
