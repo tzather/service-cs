@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 
-namespace Tzather.Identity.Api.Extensions;
+namespace Tzather.BaseApi;
 
 public static class ModelBuilderExtension
 {

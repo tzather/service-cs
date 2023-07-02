@@ -1,4 +1,4 @@
-using Tzather.Identity.Api.Models;
+using Tzather.BaseApi;
 
 namespace Tzather.Identity.Api;
 

@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace Tzather.Identity.Api.Services;
+namespace Tzather.BaseApi;
 
 public interface ITokenService
 {

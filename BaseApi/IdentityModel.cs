@@ -1,5 +1,4 @@
-
-namespace Tzather.Identity.Api.Models;
+namespace Tzather.BaseApi;
 
 public class IdentityModel
 {

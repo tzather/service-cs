@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Tzather.BaseApi;
 using Tzather.Identity.Api.Entities;
-using Tzather.Identity.Api.Extensions;
 
 namespace Tzather.Identity.Api;
 

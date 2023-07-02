@@ -3,10 +3,8 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Tzather.Identity.Api.Models;
-using Tzather.Identity.Api.Services;
 
-namespace Tzather.Identity.Api.Extensions;
+namespace Tzather.BaseApi;
 
 public static class WebApplicationBuilderExtension
 {
@@ -71,7 +69,7 @@ public static class WebApplicationBuilderExtension
       Title = $"{title} Api",
       Version = version
     });
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetEntryAssembly()?.GetName().Name}.xml");
     if (File.Exists(xmlPath))
     {
       options.IncludeXmlComments(xmlPath);

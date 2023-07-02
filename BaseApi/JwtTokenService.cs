@@ -4,9 +4,8 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Tzather.Identity.Api.Models;
 
-namespace Tzather.Identity.Api.Services;
+namespace Tzather.BaseApi;
 
 public class JwtTokenService : ITokenService
 {
