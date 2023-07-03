@@ -47,5 +47,5 @@ start-api() { (
 ); }
 
 build-server
-build-database "Api"
+build-database "Identity.Api"
 build-database-log
