@@ -14,7 +14,6 @@ public class LoginController : ControllerBase
   private readonly UserManager<UserEntity> userManager;
   private readonly ITokenService tokenService;
 
-
   public LoginController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, ITokenService tokenService)
   {
     this.signInManager = signInManager;

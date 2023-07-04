@@ -1,22 +1,23 @@
 {
-    "files.exclude": {
-      "**/.git": true,
-      "**/bin": true,
-      "**/obj": true,
-    },
-    "search.exclude": {
-      "**/.git": true,
-      "**/bin": true,
-      "**/obj": true,
-    },
-    "files.watcherExclude": {
-      "**/.git": true,
-      "**/bin": true,
-      "**/obj": true,
-    },
-    "editor.detectIndentation": false,
-    "editor.insertSpaces": true,
-    "editor.formatOnSave": true,
-    "editor.formatOnType": true,
-    "editor.tabSize": 2
-  }
+  "files.exclude": {
+    "**/.git": true,
+    "**/bin": true,
+    "**/obj": true
+  },
+  "search.exclude": {
+    "**/.git": true,
+    "**/bin": true,
+    "**/obj": true
+  },
+  "files.watcherExclude": {
+    "**/.git": true,
+    "**/bin": true,
+    "**/obj": true
+  },
+  "editor.detectIndentation": false,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.tabSize": 2,
+  "dotnet.defaultSolution": "Service.sln"
+}
