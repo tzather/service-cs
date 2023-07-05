@@ -1,10 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Zuhid.Tools;
+using Tzather.Tools;
 
-namespace Zuhid.Tools.UnitTests;
+namespace Tzather.Tools.UnitTests;
 
 [TestClass]
-public class StringExtensionTest {
+public class StringExtensionTest
+{
   [TestMethod]
   public void ToCamelCase() => Assert.AreEqual("helloWorld", "HelloWorld".ToCamelCase());
 

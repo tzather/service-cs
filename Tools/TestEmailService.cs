@@ -1,4 +1,4 @@
-namespace Zuhid.Tools;
+namespace Tzather.Tools;
 
 public class TestEmailService : IEmailService
 {

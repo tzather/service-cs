@@ -2,21 +2,32 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-namespace Zuhid.Tools;
+namespace Tzather.Tools;
 
 public class SecurityService : ISecurityService
 {
-  public string HashString(string password, string salt)
+  // https://github.com/aspnet/AspNetIdentity/blob/main/src/Microsoft.AspNet.Identity.Core/Crypto.cs
+
+  public string HashPassword(string password)
   {
-    // https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-6.0
-    return Convert.ToBase64String(KeyDerivation.Pbkdf2(
-      password: password,
-      salt: Convert.FromBase64String(salt),
-      prf: KeyDerivationPrf.HMACSHA256,
-      iterationCount: 100000,
-      numBytesRequested: 256 / 8)
-    );
+    return Crypto.HashPassword(password);
   }
+
+  public bool VerifyHashedPassword(string hashedPassword, string password)
+  {
+    return Crypto.VerifyHashedPassword(hashedPassword, password);
+  }
+
+  // public string HashString(string password, string salt) {
+  //   // https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-6.0
+  //   return Convert.ToBase64String(KeyDerivation.Pbkdf2(
+  //     password: password,
+  //     salt: Convert.FromBase64String(salt),
+  //     prf: KeyDerivationPrf.HMACSHA256,
+  //     iterationCount: 100000,
+  //     numBytesRequested: 256 / 8)
+  //   );
+  // }
 
   public string[] TimeBasedToken(string secret, int digits, int validSeconds)
   {

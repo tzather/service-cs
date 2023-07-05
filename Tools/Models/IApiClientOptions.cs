@@ -1,4 +1,4 @@
-namespace Zuhid.Tools.Models;
+namespace Tzather.Tools.Models;
 
 public interface IApiClientOptions
 {

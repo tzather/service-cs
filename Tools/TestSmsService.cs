@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace Zuhid.Tools;
+namespace Tzather.Tools;
 
 public class TestSmsService : ISmsService
 {

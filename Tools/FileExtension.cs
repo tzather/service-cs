@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Zuhid.Tools;
+namespace Tzather.Tools;
 
 public static class FileExtension
 {

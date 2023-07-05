@@ -1,6 +1,6 @@
-using Zuhid.Tools.Models;
+using Tzather.Tools.Models;
 
-namespace Zuhid.Tools;
+namespace Tzather.Tools;
 
 public interface IApiClient
 {

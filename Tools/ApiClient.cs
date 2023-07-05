@@ -1,9 +1,9 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Zuhid.Tools.Models;
+using Tzather.Tools.Models;
 
-namespace Zuhid.Tools;
+namespace Tzather.Tools;
 
 public abstract class ApiClient : IApiClient
 {

@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace Zuhid.Tools.Models;
+namespace Tzather.Tools.Models;
 
 public class ApiResponse<TModel> where TModel : class
 {

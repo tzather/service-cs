@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text.Json;
 
-namespace Zuhid.Tools;
+namespace Tzather.Tools;
 
 public class ObjectHelper
 {

@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Zuhid.Tools;
+namespace Tzather.Tools;
 
 public static class JsonHelper
 {
