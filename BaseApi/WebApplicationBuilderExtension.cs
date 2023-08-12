@@ -29,6 +29,7 @@ public static class WebApplicationBuilderExtension
     services.AddControllers(options =>
     {
       options.Filters.Add(new AuthorizeFilter());
+      options.Filters.Add(typeof(ActionFilter));
     })
     .AddJsonOptions(options => options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
     services.AddSwaggerGen(options => AddSwagger(options, name, version));

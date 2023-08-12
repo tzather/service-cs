@@ -51,6 +51,8 @@ public class LoginController : ControllerBase
         };
       }
     }
+    // ModelState.AddModelError("Error", "Invalid Login");
+    // return new LoginResponse();
     throw new ApplicationException("Invalid Login");
   }
 }

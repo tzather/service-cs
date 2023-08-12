@@ -26,5 +26,6 @@
     "source.sortMembers": true
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[csharp]": { "editor.defaultFormatter": "ms-dotnettools.csharp" }
+  "[csharp]": { "editor.defaultFormatter": "ms-dotnettools.csharp" },
+  "[shellscript]": { "editor.defaultFormatter": "foxundermoon.shell-format" }
 }
