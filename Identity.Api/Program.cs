@@ -14,6 +14,10 @@ public class Program
     AddDatabase<IIdentityDbContext, IdentityDbContext>(builder.Services, appSetting.IdentityDbContext);
     builder.Services.AddIdentity<UserEntity, RoleEntity>().AddEntityFrameworkStores<IdentityDbContext>().AddDefaultTokenProviders();
 
+    // builder.Logging.ClearProviders();
+    builder.Logging.AddColorConsoleLogger();
+    builder.Logging.AddCustomDatabaseLogger();
+
     builder
       .AddServices(appSetting.Name, appSetting.Version, appSetting.CorsOrigin, appSetting.Identity)
       .BuildApp(appSetting.Name, appSetting.Version, appSetting.CorsOrigin)

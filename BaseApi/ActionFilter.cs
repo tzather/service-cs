@@ -11,10 +11,7 @@ public class ActionFilter : IActionFilter
   private readonly ILogger logger;
 
   public ActionFilter(ILogger<ActionFilter> logger) => this.logger = logger;
-  public void OnActionExecuting(ActionExecutingContext context)
-  {
-    Console.WriteLine("OnActionExecuting");
-  }
+  public void OnActionExecuting(ActionExecutingContext context) { }
 
   public void OnActionExecuted(ActionExecutedContext context)
   {
@@ -31,14 +28,15 @@ public class ActionFilter : IActionFilter
       {
         context.Exception.Message,
         context.Exception.StackTrace,
-      }));
-      context.Result = new BadRequestObjectResult("Hello");
+      }), "HEEEEEEE", "sdfsdsds");
+      context.Result = new BadRequestObjectResult("Internal Server Error");
       context.ExceptionHandled = true;
     }
+
     // If ModelState is invalid then return a badrequest
     else if (!context.ModelState.IsValid)
     {
-      logger.LogWarning(new EventId(11, context.Controller.ToString()), JsonSerializer.Serialize(context.ModelState));
+      logger.LogWarning(GetActionEventId(context.HttpContext.Request.Method, context.HttpContext.Request.Path), JsonSerializer.Serialize(context.ModelState));
       context.Result = new BadRequestObjectResult(context.ModelState);
     }
   }
@@ -49,4 +47,16 @@ public class ActionFilter : IActionFilter
     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
     Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
   };
+
+  private static EventId GetActionEventId(string action, string path)
+  {
+    switch (action.ToUpper())
+    {
+      case "GET": return new EventId(100001, path);
+      case "POST": return new EventId(100002, path);
+      case "PUT": return new EventId(100003, path);
+      case "DELETE": return new EventId(100004, path);
+      default: return new EventId(100000, $"{action}:{path}");
+    }
+  }
 }

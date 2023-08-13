@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -25,6 +26,8 @@ public static class WebApplicationBuilderExtension
           .AllowCredentials()
       )
     );
+    // services.AddSingleton<ILoggerProvider>(provider => new DatabaseLoggerProvider("Server=localhost;Initial Catalog=Log;User Id=sa;Password=P@ssw0rd;TrustServerCertificate=true;"));
+    // LoggerProviderOptions.RegisterProviderOptions<DatabaseLoggerProvider, DatabaseLoggerProvider>(builder.Services);
 
     services.AddControllers(options =>
     {
@@ -39,6 +42,7 @@ public static class WebApplicationBuilderExtension
 
   public static WebApplication BuildApp(this WebApplicationBuilder builder, string name, string version, string corsOrigin)
   {
+
     var app = builder.Build();
     if (app.Environment.IsDevelopment())
     {
