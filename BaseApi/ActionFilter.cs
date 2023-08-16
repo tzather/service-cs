@@ -16,19 +16,26 @@ public class ActionFilter : IActionFilter
   public void OnActionExecuted(ActionExecutedContext context)
   {
     var objectResult = context.Result as ObjectResult;
+    var controllerMethod = $"{context.ActionDescriptor.RouteValues["controller"]}/{context.ActionDescriptor.RouteValues["action"]}";
+    var action = $"{context.ActionDescriptor.RouteValues["action"]}";
+    var queryString = context.HttpContext.Request.QueryString.Value;
+
     if (objectResult != null)
     {
-      var controllerMethod = $"{context.ActionDescriptor.RouteValues["controller"]}/{context.ActionDescriptor.RouteValues["action"]}";
-      var queryString = context.HttpContext.Request.QueryString.Value;
       logger.LogInformation($"{controllerMethod}{queryString} -> {JsonSerializer.Serialize(objectResult.Value, jsonSerializerOptions)}");
     }
     else if (context.Exception != null)
     {
-      logger.LogError(new EventId(11, context.Controller.ToString()), JsonSerializer.Serialize(new
+      logger.LogError(new EventId(11, context.Controller.ToString() + $"[{action}]"), JsonSerializer.Serialize(new
       {
-        context.Exception.Message,
+        controllerMethod,
+        action,
+        queryString,
+        context.HttpContext.Request.Path,
+        // context.HttpContext.Request.Body,
+        Exception = context.Exception.Message,
         context.Exception.StackTrace,
-      }), "HEEEEEEE", "sdfsdsds");
+      }));
       context.Result = new BadRequestObjectResult("Internal Server Error");
       context.ExceptionHandled = true;
     }
