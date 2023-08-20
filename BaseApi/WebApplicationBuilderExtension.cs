@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -10,24 +11,23 @@ namespace Tzather.BaseApi;
 public static class WebApplicationBuilderExtension
 {
 
-  public static WebApplicationBuilder AddServices(this WebApplicationBuilder builder, string name, string version, string corsOrigin, IdentityModel identityModel)
+  public static WebApplicationBuilder AddServices(this WebApplicationBuilder builder, BaseAppSettings appSettings)
   {
     var services = builder.Services;
     services
       .AddAuthentication()
-      .AddJwtBearer("Bearer", option => new JwtTokenService(identityModel).Configure(option));
+      .AddJwtBearer("Bearer", option => new JwtTokenService(appSettings.Identity).Configure(option));
 
     services.AddCors(options =>
-      options.AddPolicy(corsOrigin, builder =>
+      options.AddPolicy(appSettings.CorsOrigin, builder =>
         builder
-          .WithOrigins(corsOrigin)
+          .WithOrigins(appSettings.CorsOrigin)
           .AllowAnyHeader()
           .AllowAnyMethod()
           .AllowCredentials()
       )
     );
-    // services.AddSingleton<ILoggerProvider>(provider => new DatabaseLoggerProvider("Server=localhost;Initial Catalog=Log;User Id=sa;Password=P@ssw0rd;TrustServerCertificate=true;"));
-    // LoggerProviderOptions.RegisterProviderOptions<DatabaseLoggerProvider, DatabaseLoggerProvider>(builder.Services);
+    builder.Services.AddSingleton<ILoggerProvider>(n => new DatabaseLoggerProvider(appSettings.Name, appSettings.LogDbContext));
 
     services.AddControllers(options =>
     {
@@ -35,12 +35,12 @@ public static class WebApplicationBuilderExtension
       options.Filters.Add(typeof(ActionFilter));
     })
     .AddJsonOptions(options => options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
-    services.AddSwaggerGen(options => AddSwagger(options, name, version));
-    services.AddScoped<ITokenService>(option => new JwtTokenService(identityModel)); // Add identity service
+    services.AddSwaggerGen(options => AddSwagger(options, appSettings.Name, appSettings.Version));
+    services.AddScoped<ITokenService>(option => new JwtTokenService(appSettings.Identity)); // Add identity service
     return builder;
   }
 
-  public static WebApplication BuildApp(this WebApplicationBuilder builder, string name, string version, string corsOrigin)
+  public static WebApplication BuildApp(this WebApplicationBuilder builder, BaseAppSettings appSettings)
   {
 
     var app = builder.Build();
@@ -50,8 +50,8 @@ public static class WebApplicationBuilderExtension
     }
 
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/v{version}/swagger.json", $"{name} v{version}"));
-    app.UseCors(corsOrigin);
+    app.UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/v{appSettings.Version}/swagger.json", $"{appSettings.Name} v{appSettings.Version}"));
+    app.UseCors(appSettings.CorsOrigin);
     app.UseHttpsRedirection();
     app.UseAuthentication();
     app.UseAuthorization();
@@ -67,6 +67,17 @@ public static class WebApplicationBuilderExtension
     return app;
   }
 
+  public static void AddDatabase<ITContext, TContext>(this WebApplicationBuilder builder, IServiceCollection services, string connectionString)
+    where ITContext : class
+    where TContext : DbContext, ITContext
+  {
+    services.AddDbContext<TContext>(options => options
+      .UseSqlServer(connectionString)
+      .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking) // don't track entities
+      .EnableSensitiveDataLogging() // log sql param values
+    );
+    services.AddScoped<ITContext, TContext>();
+  }
   private static void AddSwagger(SwaggerGenOptions options, string title, string version)
   {
     options.SwaggerDoc($"v{version}", new OpenApiInfo

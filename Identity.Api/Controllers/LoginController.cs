@@ -52,7 +52,7 @@ public class LoginController : ControllerBase
       }
     }
     ModelState.AddModelError("Error", "Invalid Login");
-    throw new Exception("Hello");
-    // return new LoginResponse();
+    return new LoginResponse();
+    // throw new Exception("Hello");
   }
 }

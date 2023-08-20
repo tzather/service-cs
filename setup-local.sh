@@ -47,5 +47,6 @@ start-api() { (
 ); }
 
 build-server
+sleep 5 # Waits 5 seconds.
 build-database "Identity.Api"
 build-database-log

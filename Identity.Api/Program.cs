@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Tzather.BaseApi;
 using Tzather.Identity.Api.Entities;
 
@@ -11,29 +10,12 @@ public class Program
   {
     var builder = WebApplication.CreateBuilder(args);
     var appSetting = new AppSetting(builder.Configuration);
-    AddDatabase<IIdentityDbContext, IdentityDbContext>(builder.Services, appSetting.IdentityDbContext);
+    builder.AddDatabase<IIdentityDbContext, IdentityDbContext>(builder.Services, appSetting.IdentityDbContext);
     builder.Services.AddIdentity<UserEntity, RoleEntity>().AddEntityFrameworkStores<IdentityDbContext>().AddDefaultTokenProviders();
 
-    // builder.Logging.ClearProviders();
-    builder.Logging.AddColorConsoleLogger();
-    builder.Logging.AddCustomDatabaseLogger();
-
     builder
-      .AddServices(appSetting.Name, appSetting.Version, appSetting.CorsOrigin, appSetting.Identity)
-      .BuildApp(appSetting.Name, appSetting.Version, appSetting.CorsOrigin)
+      .AddServices(appSetting)
+      .BuildApp(appSetting)
       .Run();
-  }
-
-
-  public static void AddDatabase<ITContext, TContext>(IServiceCollection services, string connectionString)
-    where ITContext : class
-    where TContext : DbContext, ITContext
-  {
-    services.AddDbContext<TContext>(options => options
-      .UseSqlServer(connectionString)
-      .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking) // don't track entities
-      .EnableSensitiveDataLogging() // log sql param values
-    );
-    services.AddScoped<ITContext, TContext>();
   }
 }
