@@ -16,26 +16,24 @@ public class ActionFilter : IActionFilter
   public void OnActionExecuted(ActionExecutedContext context)
   {
     var objectResult = context.Result as ObjectResult;
-    var controllerMethod = $"{context.ActionDescriptor.RouteValues["controller"]}/{context.ActionDescriptor.RouteValues["action"]}";
+    var controllerAction = $"{context.ActionDescriptor.RouteValues["controller"]}.{context.ActionDescriptor.RouteValues["action"]}";
     var action = $"{context.ActionDescriptor.RouteValues["action"]}";
     var queryString = context.HttpContext.Request.QueryString.Value;
+    // Console.WriteLine($"SSSSSSSSSSSSSSSSSSSSS  = {context.ActionDescriptor.DisplayName}");
 
-    if (objectResult != null)
+    if (context.Exception != null)
     {
-      logger.LogInformation($"{controllerMethod}{queryString} -> {JsonSerializer.Serialize(objectResult.Value, jsonSerializerOptions)}");
-    }
-    else if (context.Exception != null)
-    {
-      logger.LogError(new EventId(11, context.Controller.ToString() + $"[{action}]"), JsonSerializer.Serialize(new
+      logger.LogError(new EventId(0, controllerAction), JsonSerializer.Serialize(new
       {
-        controllerMethod,
+        controllerAction,
         action,
         queryString,
         context.HttpContext.Request.Path,
         // context.HttpContext.Request.Body,
         Exception = context.Exception.Message,
         context.Exception.StackTrace,
-      }));
+      }, jsonSerializerOptions));
+
       context.Result = new BadRequestObjectResult("Internal Server Error");
       context.ExceptionHandled = true;
     }
@@ -43,9 +41,21 @@ public class ActionFilter : IActionFilter
     // If ModelState is invalid then return a badrequest
     else if (!context.ModelState.IsValid)
     {
-      logger.LogWarning(GetActionEventId(context.HttpContext.Request.Method, context.HttpContext.Request.Path), JsonSerializer.Serialize(context.ModelState));
+      logger.LogWarning(new EventId(0, controllerAction), JsonSerializer.Serialize(new
+      {
+        ModelState = context.ModelState
+      }, jsonSerializerOptions));
+
       context.Result = new BadRequestObjectResult(context.ModelState);
     }
+    else if (objectResult != null)
+    {
+      logger.LogInformation(new EventId(0, controllerAction), JsonSerializer.Serialize(new
+      {
+        objectResult.Value,
+      }, jsonSerializerOptions));
+    }
+
   }
 
   private static JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
@@ -54,16 +64,4 @@ public class ActionFilter : IActionFilter
     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
     Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
   };
-
-  private static EventId GetActionEventId(string action, string path)
-  {
-    switch (action.ToUpper())
-    {
-      case "GET": return new EventId(100001, path);
-      case "POST": return new EventId(100002, path);
-      case "PUT": return new EventId(100003, path);
-      case "DELETE": return new EventId(100004, path);
-      default: return new EventId(100000, $"{action}:{path}");
-    }
-  }
 }

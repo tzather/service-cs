@@ -29,7 +29,7 @@ public class LoginController : ControllerBase
   /// <exception cref="ApplicationException"></exception>
   [AllowAnonymous]
   [HttpPost()]
-  public async Task<object> Post([FromBody] LoginModel model)
+  public async Task<object> Postsave([FromBody] LoginModel model)
   {
     var userEntity = await userManager.FindByNameAsync(model.UserName);
     if (userEntity != null)
