@@ -19,7 +19,6 @@ public class CsvFormatter : TextOutputFormatter
   public override Task WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
   {
     var csv = new StringBuilder();
-    return context.HttpContext.Response.WriteAsync($"dfdfdsfdsf", selectedEncoding);
     // dispaly header
     csv.AppendLine(string.Join(",", GetTypeOf(context.Object).GetProperties().Select(x => x.Name)));
 

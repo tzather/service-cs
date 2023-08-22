@@ -36,10 +36,9 @@ public static class WebApplicationBuilderExtension
       options.Filters.Add(typeof(ActionFilter));
       // options.Filters.Add(typeof(ExceptionFilter));
       // // Add Global OutputFormatters 
-      options.Filters.Add(new ProducesAttribute("application/json", "application/xml", "text/csv"));
-      options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
-      options.OutputFormatters.Add(new CsvFormatter());
-
+      // options.Filters.Add(new ProducesAttribute("application/json", "application/xml", "text/csv"));
+      // options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+      // options.OutputFormatters.Add(new CsvFormatter());
     })
     .AddJsonOptions(options => options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
     services.AddSwaggerGen(options => AddSwagger(options, appSettings.Name, appSettings.Version));

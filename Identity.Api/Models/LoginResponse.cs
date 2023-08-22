@@ -9,7 +9,7 @@ public class LoginResponse
   /// <summary>
   /// Is Tfa required
   /// </summary>
-  public bool RequireTfa { get; set; } = "";
+  public bool RequireTfa { get; set; } = false;
 
   /// <summary>
   /// Authentication token
