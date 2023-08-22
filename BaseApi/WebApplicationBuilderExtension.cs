@@ -1,8 +1,9 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -33,6 +34,12 @@ public static class WebApplicationBuilderExtension
     {
       options.Filters.Add(new AuthorizeFilter());
       options.Filters.Add(typeof(ActionFilter));
+      // options.Filters.Add(typeof(ExceptionFilter));
+      // // Add Global OutputFormatters 
+      options.Filters.Add(new ProducesAttribute("application/json", "application/xml", "text/csv"));
+      options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+      options.OutputFormatters.Add(new CsvFormatter());
+
     })
     .AddJsonOptions(options => options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
     services.AddSwaggerGen(options => AddSwagger(options, appSettings.Name, appSettings.Version));

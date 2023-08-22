@@ -19,7 +19,6 @@ public class ActionFilter : IActionFilter
     var controllerAction = $"{context.ActionDescriptor.RouteValues["controller"]}.{context.ActionDescriptor.RouteValues["action"]}";
     var action = $"{context.ActionDescriptor.RouteValues["action"]}";
     var queryString = context.HttpContext.Request.QueryString.Value;
-    // Console.WriteLine($"SSSSSSSSSSSSSSSSSSSSS  = {context.ActionDescriptor.DisplayName}");
 
     if (context.Exception != null)
     {
@@ -48,14 +47,14 @@ public class ActionFilter : IActionFilter
 
       context.Result = new BadRequestObjectResult(context.ModelState);
     }
-    else if (objectResult != null)
+    else
     {
       logger.LogInformation(new EventId(0, controllerAction), JsonSerializer.Serialize(new
       {
-        objectResult.Value,
+        Name = context.HttpContext.User?.Identity?.Name,
+        objectResult = objectResult?.Value,
       }, jsonSerializerOptions));
     }
-
   }
 
   private static JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions

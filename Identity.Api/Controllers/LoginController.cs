@@ -29,7 +29,7 @@ public class LoginController : ControllerBase
   /// <exception cref="ApplicationException"></exception>
   [AllowAnonymous]
   [HttpPost()]
-  public async Task<object> Postsave([FromBody] LoginModel model)
+  public async Task<object> Post([FromBody] LoginModel model)
   {
     var userEntity = await userManager.FindByNameAsync(model.UserName);
     if (userEntity != null)
@@ -54,5 +54,18 @@ public class LoginController : ControllerBase
     ModelState.AddModelError("Error", "Invalid Login");
     return new LoginResponse();
     // throw new Exception("Hello");
+  }
+
+  [AllowAnonymous]
+  [HttpGet()]
+  // [Produces("application/json", "text/csv")]
+  public LoginResponse Test()
+  {
+    return new LoginResponse
+    {
+      LandingPage = "Hello",
+      RequireTfa = true
+    };
+
   }
 }
